@@ -673,6 +673,22 @@ BOOL rh_dispatch_is_current_queue_for_addressbook(RHAddressBook *addressBook){
     return [NSArray arrayWithArray:result];
 }
 
+-(NSArray*)peopleWithPhone:(NSString*)phone{
+    NSString *formattedPhoneNumber = [[phone stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] lowercaseString];
+    
+    NSMutableArray *result = [NSMutableArray array];
+    rh_dispatch_sync_for_addressbook(self, ^{
+        for(RHPerson *person in [self people]) {
+            NSArray *phoneNumbers = [[person.phoneNumbers values] valueForKey:@"lowercaseString"];
+            if ([phoneNumbers containsObject:formattedPhoneNumber]){
+                [result addObject:person];
+            }
+        }
+    });
+    
+    return [NSArray arrayWithArray:result];
+}
+
 -(RHPerson*)personForABRecordRef:(ABRecordRef)personRef{
     
     if (personRef == NULL) return nil; //bail
