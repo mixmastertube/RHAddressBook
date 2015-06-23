@@ -8,5 +8,6 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => 'https://github.com/mixmastertube/RHAddressBook.git', :tag => '1.1.1' }
   spec.source_files = 'RHAddressBook/*.{h,m}'
   spec.framework    = 'AddressBookUI','CoreLocation','AddressBook'
+  spec.prefix_header_file = 'RHAddressBook/RHAddressBook-Prefix.pch'
   spec.requires_arc = false
 end
